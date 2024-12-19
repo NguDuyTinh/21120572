@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_BUILDKIT = "1"
+    }
     tools {
         nodejs 'nodejs'
     }
@@ -8,8 +11,19 @@ pipeline {
 
         booleanParam(name :'executeTests', description:'Execute the tests', defaultValue:false)
     }
-
+    
     stages {
+        stage('Setup Buildx') {
+            steps {
+                sh '''
+                mkdir -p ~/.docker/cli-plugins
+                curl -LO https://github.com/docker/buildx/releases/latest/download/buildx-v0.11.2.linux-amd64
+                mv buildx-v0.11.2.linux-amd64 ~/.docker/cli-plugins/docker-buildx
+                chmod +x ~/.docker/cli-plugins/docker-buildx
+                docker buildx create --use
+                '''
+            }
+        }
         stage('Build') {
             steps {
                 //sh 'npm install'
@@ -29,8 +43,6 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'Admin@123', usernameVariable: '21120572')]) {
                     sh '''
-                    sudo apt install docker-buildx-plugin
-                    docker buildx install
                     DOCKER_BUILDKIT=1 docker build -t DevOps/sample-react-app .
                     '''
                     sh "echo $PASS | docker login -u $USER --password-stdin"
