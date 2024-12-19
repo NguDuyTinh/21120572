@@ -29,7 +29,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'Admin@123', usernameVariable: '21120572')]) {
                     sh '''
-                    apt install docker-buildx-plugin
+                    sudo apt install docker-buildx-plugin
                     docker buildx install
                     DOCKER_BUILDKIT=1 docker build -t DevOps/sample-react-app .
                     '''
