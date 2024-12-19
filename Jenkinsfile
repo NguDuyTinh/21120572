@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DOCKER_BUILDKIT = "1"
-    }
     tools {
         nodejs 'nodejs'
     }
@@ -13,16 +10,6 @@ pipeline {
     }
     
     stages {
-        stage('Setup Buildx') {
-            steps {
-                sh '''
-                mkdir -p ~/.docker/cli-plugins
-                curl -LO https://github.com/docker/buildx/releases/latest/download/buildx-v0.11.2.linux-amd64
-                mv buildx-v0.11.2.linux-amd64 ~/.docker/cli-plugins/docker-buildx
-                chmod +x ~/.docker/cli-plugins/docker-buildx
-                '''
-            }
-        }
         stage('Build') {
             steps {
                 //sh 'npm install'
