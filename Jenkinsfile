@@ -20,7 +20,6 @@ pipeline {
                 curl -LO https://github.com/docker/buildx/releases/latest/download/buildx-v0.11.2.linux-amd64
                 mv buildx-v0.11.2.linux-amd64 ~/.docker/cli-plugins/docker-buildx
                 chmod +x ~/.docker/cli-plugins/docker-buildx
-                docker buildx create --use
                 '''
             }
         }
