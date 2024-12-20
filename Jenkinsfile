@@ -28,7 +28,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'Admin@123', usernameVariable: '21120572')]) {
-                    sh 'docker --version'
+                    sh 'docker ps'
                     sh '''
                     docker build -t DevOps/sample-react-app .
                     '''
