@@ -15,7 +15,7 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-hub-repo') {
+                    withDockerRegistry(credentialsId: 'docker-hub-repo', passwordVariable: 'Admin@123', usernameVariable: '21120572') {
                         sh 'docker build -t wude18/docker-hub-repo:ta123 .'
                         sh 'docker push wude18/docker-hub-repo:ta123'
                     }
