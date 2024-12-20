@@ -9,7 +9,8 @@ pipeline {
         stage('Maven Build') {
             steps {
                 //sh 'mvn clean install'
-                echo 'Maven Build'
+                sh 'docker --version'
+                sh 'docker ps'
             }
         }
         stage('Docker Build & Push') {
